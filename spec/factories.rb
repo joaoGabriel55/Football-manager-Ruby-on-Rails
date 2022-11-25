@@ -5,6 +5,6 @@ FactoryBot.define do
     name { Faker::Name.unique.name }
     age { Faker::Number.between(from: 16, to: 52) }
     position { positions.sample }
-    overall { Faker::Number.between(0, 99) }
+    overall { Faker::Number.between(from: 0, to: 99) }
   end
 end
