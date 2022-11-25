@@ -18,7 +18,7 @@ class PlayersController < ActionController::API
   def update
     begin
       player = Player.find(params[:id])
-      player.update(player_params)
+      player.update!(player_params)
 
       render json: player, status: :ok
     rescue => exception
