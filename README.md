@@ -1,24 +1,39 @@
-# README
+## How to run
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Database
+```bash
+docker-compose up
+rails db:migrate
+```
 
-Things you may want to cover:
+### Start app
 
-* Ruby version
+```bash
+rails s
+```
 
-* System dependencies
 
-* Configuration
+## How to test
 
-* Database creation
+```bash
+bundle exec rspec
+```
 
-* Database initialization
+## Troubleshooting
 
-* How to run the test suite
+### Kill stopped server
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+lsof -wni tcp:3000
+kill -9 <PID>
+```
 
-* Deployment instructions
+### Fix pg gem installation
 
-* ...
+```bash
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+sudo apt-get -y update
+sudo apt-get remove libpq5
+sudo apt-get install libpq-dev
+```
