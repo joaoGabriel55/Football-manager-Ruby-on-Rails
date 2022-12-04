@@ -92,6 +92,10 @@ RSpec.describe PlayersController, type: :request do
       it "returns status code 400" do
         expect(response).to have_http_status(:bad_request)
       end
+
+      it "returns error message" do
+        expect(JSON.parse(response.body)["message"]).to eq("Couldn't find Player with 'id'=999")
+      end
     end
   end
 
