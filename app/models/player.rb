@@ -7,6 +7,8 @@ class Player < ApplicationRecord
   belongs_to :team, optional: true
 
   def plays_for
-    self.team.name
+    if self.team.present?
+      self.team.name
+    end
   end
 end
