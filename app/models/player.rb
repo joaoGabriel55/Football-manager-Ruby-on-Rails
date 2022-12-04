@@ -4,7 +4,7 @@ class Player < ApplicationRecord
   validates :position, presence: true
   validates :overall, presence: true, numericality: { greater_than: 0 }
 
-  belongs_to :team
+  belongs_to :team, optional: true
 
   def plays_for
     self.team.name
