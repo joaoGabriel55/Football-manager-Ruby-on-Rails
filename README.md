@@ -1,6 +1,7 @@
 ## How to run
 
 ### Database
+
 ```bash
 docker-compose up
 rails db:migrate
@@ -12,7 +13,15 @@ rails db:migrate
 rails s
 ```
 
+### Routes
 
+```
+- /api/players [GET, POST]
+- /api/players/:id [PUT, DELETE]
+- /api/teams [GET, POST]
+- /api/teams/:id [PUT, DELETE]
+- /api/teams/:id/players [GET, PUT]
+```
 ## How to test
 
 ```bash
