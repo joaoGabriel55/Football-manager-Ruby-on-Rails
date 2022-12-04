@@ -15,6 +15,7 @@ jobs:
         image: postgres:latest
         env:
           POSTGRES_DB: fm-db
+          POSTGRES_HOST: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_USER: postgres
         ports:
