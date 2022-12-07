@@ -87,7 +87,7 @@ RSpec.describe PlayersController, type: :request do
         }
       }
 
-      before { put "/api/players/#{players[0].id}", params: player }
+      before { put "/api/players/999", params: player }
 
       it "returns status code 400" do
         expect(response).to have_http_status(:bad_request)
