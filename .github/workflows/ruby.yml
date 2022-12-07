@@ -32,17 +32,17 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - name: Install dependencies
+        run: bundle install
       - name: Setup Database
         run: |
-          bundle exec db:create
-          bundle exec db:schema:load
-          bundle exec db:migrate
+          rails db:create
+          rails db:schema:load
+          rails db:migrate
         env:
           RAILS_ENV: test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-      - name: Install dependencies
-        run: bundle install
       - name: Run tests
         run: bundle exec rspec
         env:
