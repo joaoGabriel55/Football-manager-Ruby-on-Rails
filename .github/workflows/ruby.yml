@@ -36,9 +36,9 @@ jobs:
         run: bundle install
       - name: Setup Database
         run: |
-          rails db:create
-          rails db:schema:load
-          rails db:migrate
+          bundle exec db:create
+          bundle exec db:schema:load
+          bundle exec db:migrate
         env:
           RAILS_ENV: test
           POSTGRES_USER: postgres
