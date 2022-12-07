@@ -81,16 +81,20 @@ RSpec.describe PlayersController, type: :request do
         {
           id: players[0].id,
           name: "Messi",
-          age: 15,
+          age: 16,
           overall: 98,
           position: "Forward",
         }
       }
 
-      before { put "/api/players/#{players[0].id}", params: player }
+      before { put "/api/players/999", params: player }
 
       it "returns status code 400" do
         expect(response).to have_http_status(:bad_request)
+      end
+
+      it "returns error message" do
+        expect(JSON.parse(response.body)["message"]).to eq("Couldn't find Player with 'id'=999")
       end
     end
   end

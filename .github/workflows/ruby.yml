@@ -12,27 +12,40 @@ jobs:
 
     services:
       postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_DB: fm-db
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: postgres
+        image: postgres:13
         ports:
           - 5432:5432
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    strategy:
+      matrix:
+        ruby-version: ['2.7.2']
 
     steps:
       - uses: actions/checkout@v3
+      - name: Install dependent libraries
+        run: sudo apt-get install libpq-dev
       - name: Set up Ruby
-        uses: ruby/setup-ruby@359bebbc29cbe6c87da6bc9ea3bc930432750108
+        uses: ruby/setup-ruby@master
         with:
-          ruby-version: "2.7.2"
-      - name: Install dependencies
-        run: bundle install
+          ruby-version: ${{ matrix.ruby-version }}
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - name: Setup Database
+        run: |
+          bundle exec rake db:create
+          bundle exec rake db:schema:load
+          bundle exec rake db:migrate
+        env:
+          RAILS_ENV: test
+          DATABASE_HOST: 'localhost'
+          DATABASE_USERNAME: 'postgres'
+          DATABASE_PASSWORD: 'postgres'
       - name: Run tests
-        run: rails db:create && rails db:migrate && bundle exec rspec
+        run: bundle exec rspec
+        env:
+          RAILS_ENV: test
+          DATABASE_HOST: 'localhost'
+          DATABASE_USERNAME: 'postgres'
+          DATABASE_PASSWORD: 'postgres'
