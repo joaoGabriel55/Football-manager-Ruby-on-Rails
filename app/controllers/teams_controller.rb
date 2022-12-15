@@ -3,6 +3,10 @@ class TeamsController < ActionController::API
     render json: Team.all
   end
 
+  def team_players
+    render json: Player.where(team_id: params[:team_id])
+  end
+
   def create
     team = Team.new(team_params)
 
