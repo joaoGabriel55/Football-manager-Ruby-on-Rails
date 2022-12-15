@@ -15,6 +15,27 @@ RSpec.describe PlayersController, type: :request do
     end
   end
 
+  describe "GET team_players" do
+    let!(:players) { FactoryBot.create_list(:fake_player, 1) }
+    let!(:teams) { FactoryBot.create_list(:fake_team, 1) }
+    let!(:player_id) { players[0].id }
+    let!(:team_id) { teams[0].id }
+
+    before do
+      JoinToTeam.new(player_id: player_id, team_id: team_id).call
+
+      get "/api/team/#{team_id}/players"
+    end
+
+    it "returns players from a team" do
+      expect(JSON.parse(response.body).size).to eq(1)
+    end
+
+    it "returns status code 200" do
+      expect(response).to have_http_status(:success)
+    end
+  end
+
   describe "POST create" do
     context "Successfully" do
       let(:team) {

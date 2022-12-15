@@ -28,10 +28,7 @@ class PlayersController < ActionController::API
 
   def join_to_team
     begin
-      player = Player.find(params[:id])
-      team = Team.find(params[:team_id])
-
-      player.update!(team: team)
+      player = JoinToTeam.new(player_id: params[:id], team_id: params[:team_id]).call
 
       render json: { plays_for: player.plays_for }, status: :ok
     rescue => exception

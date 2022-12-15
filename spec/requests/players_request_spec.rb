@@ -112,7 +112,7 @@ RSpec.describe PlayersController, type: :request do
       end
 
       it "returns plays for" do
-        expect(JSON.parse(response.body)['plays_for']).to eq(teams[0].name)
+        expect(JSON.parse(response.body)["plays_for"]).to eq(teams[0].name)
       end
     end
 
