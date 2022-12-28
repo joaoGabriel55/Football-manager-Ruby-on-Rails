@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Player < ApplicationRecord
   validates :name, presence: true
   validates :age, presence: true, numericality: { greater_than_or_equal_to: 16 }
@@ -7,8 +9,8 @@ class Player < ApplicationRecord
   belongs_to :team, optional: true
 
   def plays_for
-    if self.team.present?
-      self.team.name
-    end
+    return if team.blank?
+
+    team.name
   end
 end

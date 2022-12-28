@@ -1,0 +1,11 @@
+# https://docs.rubocop.org/rubocop/configuration
+
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+
+Style/Documentation:
+  Enabled: false

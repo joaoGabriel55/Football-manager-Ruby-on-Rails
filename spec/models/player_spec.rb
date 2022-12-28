@@ -1,13 +1,15 @@
-require "rails_helper"
+# frozen_string_literal: true
 
-RSpec.describe Player, type: :model do
-  context "validate Player" do
-    it "invalid age" do
-      expect(Player.new(name: "Lionel", age: 15, position: "Forward", overall: 98).valid?).to be_falsey
+require 'rails_helper'
+
+RSpec.describe Player do
+  context 'validate Player' do
+    it 'invalid age' do
+      expect(described_class.new(name: 'Lionel', age: 15, position: 'Forward', overall: 98)).not_to be_valid
     end
 
-    it "invalid overall" do
-      expect(Player.new(name: "Lionel", age: 17, position: "Forward", overall: 0).valid?).to be_falsey
+    it 'invalid overall' do
+      expect(described_class.new(name: 'Lionel', age: 17, position: 'Forward', overall: 0)).not_to be_valid
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PlayersController < ActionController::API
   def index
     render json: Player.all # Ask for help!
@@ -10,47 +12,41 @@ class PlayersController < ActionController::API
       player.save!
 
       render json: player, status: :created
-    rescue => exception
-      render json: { message: exception }, status: :bad_request
+    rescue StandardError => e
+      render json: { message: e }, status: :bad_request
     end
   end
 
   def update
-    begin
-      player = Player.find(params[:id])
-      player.update!(player_params)
+    player = Player.find(params[:id])
+    player.update!(player_params)
 
-      render json: player, status: :ok
-    rescue => exception
-      render json: { message: exception }, status: :bad_request
-    end
+    render json: player, status: :ok
+  rescue StandardError => e
+    render json: { message: e }, status: :bad_request
   end
 
   def join_to_team
-    begin
-      player = JoinToTeam.new(player_id: params[:id], team_id: params[:team_id]).call
+    player = JoinToTeam.new(player_id: params[:id], team_id: params[:team_id]).call
 
-      render json: { plays_for: player.plays_for }, status: :ok
-    rescue => exception
-      render json: { message: exception }, status: :bad_request
-    end
+    render json: { plays_for: player.plays_for }, status: :ok
+  rescue StandardError => e
+    render json: { message: e }, status: :bad_request
   end
 
   def destroy
-    begin
-      player = Player.find(params[:id])
+    player = Player.find(params[:id])
 
-      player.destroy!
+    player.destroy!
 
-      render json: {}, status: :no_content
-    rescue => exception
-      render json: { message: exception }, status: :bad_request
-    end
+    render json: {}, status: :no_content
+  rescue StandardError => e
+    render json: { message: e }, status: :bad_request
   end
 
   private
 
   def player_params
-    params.permit([:name, :age, :position, :overall])
+    params.permit(%i[name age position overall])
   end
 end
