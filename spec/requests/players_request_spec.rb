@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe PlayersController do
   describe 'GET index' do
-    let!(:players) { create_list(:fake_player, 20) }
+    let!(:players) { FactoryBot.create_list(:fake_player, 20) }
 
     before { get '/api/players' }
 
@@ -59,7 +59,7 @@ RSpec.describe PlayersController do
 
   describe 'PUT update' do
     context 'Successfully' do
-      let!(:players) { create_list(:fake_player, 2) }
+      let!(:players) { FactoryBot.create_list(:fake_player, 2) }
       let(:player) do
         {
           id: players[0].id,
@@ -78,7 +78,7 @@ RSpec.describe PlayersController do
     end
 
     context 'Bad request' do
-      let!(:players) { create_list(:fake_player, 2) }
+      let!(:players) { FactoryBot.create_list(:fake_player, 2) }
       let(:player) do
         {
           id: players[0].id,
@@ -103,8 +103,8 @@ RSpec.describe PlayersController do
 
   describe 'PUT join_to_team' do
     context 'Successfully' do
-      let!(:players) { create_list(:fake_player, 1) }
-      let!(:teams) { create_list(:fake_team, 1) }
+      let!(:players) { FactoryBot.create_list(:fake_player, 1) }
+      let!(:teams) { FactoryBot.create_list(:fake_team, 1) }
       let!(:team_id) { { team_id: teams[0].id } }
 
       before { put "/api/players/#{players[0].id}/team", params: team_id }
@@ -119,8 +119,8 @@ RSpec.describe PlayersController do
     end
 
     context 'Could not find player' do
-      let!(:players) { create_list(:fake_player, 1) }
-      let!(:teams) { create_list(:fake_team, 1) }
+      let!(:players) { FactoryBot.create_list(:fake_player, 1) }
+      let!(:teams) { FactoryBot.create_list(:fake_team, 1) }
       let!(:team_id) { { team_id: teams[0].id } }
 
       before { put '/api/players/999/team', params: team_id }
@@ -135,8 +135,8 @@ RSpec.describe PlayersController do
     end
 
     context 'Could not find team' do
-      let!(:players) { create_list(:fake_player, 1) }
-      let!(:teams) { create_list(:fake_team, 1) }
+      let!(:players) { FactoryBot.create_list(:fake_player, 1) }
+      let!(:teams) { FactoryBot.create_list(:fake_team, 1) }
       let!(:team_id) { { team_id: 999 } }
 
       before { put "/api/players/#{players[0].id}/team", params: team_id }
@@ -153,7 +153,7 @@ RSpec.describe PlayersController do
 
   describe 'DELETE destroy' do
     context 'Successfully' do
-      let!(:players) { create_list(:fake_player, 2) }
+      let!(:players) { FactoryBot.create_list(:fake_player, 2) }
 
       before { delete "/api/players/#{players[0].id}" }
 
@@ -163,7 +163,7 @@ RSpec.describe PlayersController do
     end
 
     context 'Bad request' do
-      let!(:players) { create_list(:fake_player, 2) }
+      let!(:players) { FactoryBot.create_list(:fake_player, 2) }
 
       before { delete '/api/players/999' }
 

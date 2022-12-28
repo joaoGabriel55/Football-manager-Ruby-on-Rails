@@ -1,10 +1,8 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
-RSpec.describe PlayersController do
+RSpec.describe PlayersController, type: :request do
   describe 'GET index' do
-    let!(:teams) { create_list(:fake_team, 20) }
+    let!(:teams) { FactoryBot.create_list(:fake_team, 20) }
 
     before { get '/api/teams' }
 
@@ -18,8 +16,8 @@ RSpec.describe PlayersController do
   end
 
   describe 'GET team_players' do
-    let!(:players) { create_list(:fake_player, 1) }
-    let!(:teams) { create_list(:fake_team, 1) }
+    let!(:players) { FactoryBot.create_list(:fake_player, 1) }
+    let!(:teams) { FactoryBot.create_list(:fake_team, 1) }
     let!(:player_id) { players[0].id }
     let!(:team_id) { teams[0].id }
 
@@ -79,7 +77,7 @@ RSpec.describe PlayersController do
 
   describe 'PUT update' do
     context 'Successfully' do
-      let!(:teams) { create_list(:fake_team, 2) }
+      let!(:teams) { FactoryBot.create_list(:fake_team, 2) }
       let(:team) do
         {
           id: teams[0].id,
@@ -97,7 +95,7 @@ RSpec.describe PlayersController do
     end
 
     context 'Bad request' do
-      let!(:teams) { create_list(:fake_team, 2) }
+      let!(:teams) { FactoryBot.create_list(:fake_team, 2) }
       let(:team) do
         {
           id: teams[0].id,
@@ -117,7 +115,7 @@ RSpec.describe PlayersController do
 
   describe 'DELETE destroy' do
     context 'Successfully' do
-      let!(:teams) { create_list(:fake_team, 2) }
+      let!(:teams) { FactoryBot.create_list(:fake_team, 2) }
 
       before { delete "/api/teams/#{teams[0].id}" }
 
@@ -127,7 +125,7 @@ RSpec.describe PlayersController do
     end
 
     context 'Bad request' do
-      let!(:teams) { create_list(:fake_player, 2) }
+      let!(:teams) { FactoryBot.create_list(:fake_player, 2) }
 
       before { delete '/api/teams/999' }
 
