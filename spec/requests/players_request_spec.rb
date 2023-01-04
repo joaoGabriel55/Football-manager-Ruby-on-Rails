@@ -31,7 +31,9 @@ RSpec.describe PlayersController do
       before { post '/api/players', params: player }
 
       it 'returns created player' do
-        expect(JSON.parse(response.body)['name']).to eq(player[:name])
+        json_response = JSON.parse(response.body)
+        expect(json_response['name']).to eq(player[:name])
+        expect(json_response['plays_for']).to eq('Without club')
       end
 
       it 'returns status code 201' do

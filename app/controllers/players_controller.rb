@@ -2,7 +2,7 @@
 
 class PlayersController < ActionController::API
   def index
-    render json: Player.all # Ask for help!
+    render json: Player.includes(:team).all
   end
 
   def create
